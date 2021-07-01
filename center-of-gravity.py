@@ -156,7 +156,7 @@ def get_longitudinal_distance(vehicle_mass, rear_axle_mass, mean_wheelbase):
     Return values:
     The longitudinal distance of the center of gravity in mm.
     """
-    return rear_axle_mass / vehicle_mass + mean_wheelbase
+    return (rear_axle_mass / vehicle_mass) * mean_wheelbase
 
 
 def get_transverse_distance(front_track, rear_track, rear_right_mass,
@@ -242,8 +242,11 @@ def main():
                                               rear_right_wheel_mass, rear_left_wheel_mass, front_left_wheel_mass,
                                               front_right_wheel_mass, lifted_rear_axle_mass, lifted_angle,
                                               static_wheel_radius)
-
-    print(center_of_gravity)
+    longitudinal_distance, transverse_distance, height = center_of_gravity
+    print("Center of Gravity:")
+    print(f"X = {round(longitudinal_distance, 2)}")
+    print(f"Y = {round(transverse_distance, 2)}")
+    print(f"Z = {round(height, 2)}")
 
 
 if __name__ == '__main__':
