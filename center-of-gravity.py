@@ -243,10 +243,10 @@ def main():
                                               front_right_wheel_mass, lifted_rear_axle_mass, lifted_angle,
                                               static_wheel_radius)
     longitudinal_distance, transverse_distance, height = center_of_gravity
-    print("Center of Gravity:")
-    print(f"X = {round(longitudinal_distance, 2)}")
-    print(f"Y = {round(transverse_distance, 2)}")
-    print(f"Z = {round(height, 2)}")
+    print("\nCenter of Gravity:")
+    print(f"X = {round(longitudinal_distance, 2)} mm.")
+    print(f"Y = {round(transverse_distance, 2)} mm")
+    print(f"Z = {round(height, 2)} mm.")
 
 
 if __name__ == '__main__':
