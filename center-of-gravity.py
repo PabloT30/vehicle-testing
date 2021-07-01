@@ -245,7 +245,7 @@ def main():
     longitudinal_distance, transverse_distance, height = center_of_gravity
     print("\nCenter of Gravity:")
     print(f"X = {round(longitudinal_distance, 2)} mm.")
-    print(f"Y = {round(transverse_distance, 2)} mm")
+    print(f"Y = {round(transverse_distance, 2)} mm.")
     print(f"Z = {round(height, 2)} mm.")
 
 
