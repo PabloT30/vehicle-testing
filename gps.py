@@ -1,6 +1,7 @@
 import serial
 import time
 import csv
+from datetime import datetime
 
 # protocol to work with GPS: NMEA
 # it has different sentences like GPRMC.
@@ -16,6 +17,38 @@ moment = time.strftime("%Y-%b-%d__%H_%M_%S", time.localtime())
 header_flag = True
 header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
           'speed_kmh', 'true_course', 'date_stamp', 'variation', 'east/west']
+
+# E.g. $GPRMC,225446,A,4916.45,N,12311.12,W,000.5,054.7,191194,020.3,E*68
+#      0       1     2  3      4  5       6   7    8      9     10   11 12
+
+# Position  | Variable          | Example       | Description
+# 0         | Sentence          | GPRMC         | GPS sentence
+# 1         | Time Stamp        | 225446        | Time of fix 22:54:46 UTC - hhmmss
+# 2         | Validity          | A             | Navigation receiver warning A = OK, V = warning-invalid
+# 3         | Current latitude  | 4916.45       | dd° mm.mmm' Latitude 49 deg. 16.45 min N/S.
+# 4         | North/South       | N             | North/South latitude.
+# 5         | Current longitude | 12311.12      | Longitude 123 deg. 11.12 min E/W.
+# 6         | East/West         | E             | East/West latitude.
+# 7         | Speed in knots    | 000.5         | Speed over ground in Knots -> * 1.852 to convert to kmh
+# 8         | True course       | 054.7         | Course Made Good, True
+# 9         | Date Stamp        | 191194        | Date of fix  19 November 1994 - ddmmyy
+# 10        | Variation         | 020.3,E       | Magnetic variation 20.3 deg
+# 11        | East/West         | E             | East/West magnetic variation
+# 12        | Checksum          | *68           | Mandatory checksum
+
+# tiempo = 225446
+# fecha = 300721
+#
+#
+# def to_timestamp(time_, date_):
+#     time_ = str(time_)
+#     date_ = str(date_)
+#     time_ = f"{time_[0:2]}:{time_[2:4]}:{time_[4:]} UTC"
+#     date_ = f"20{date_[4:]}-{date_[0:2]}-{date_[2:4]}"
+#     return date_ + ' ' + time_
+
+
+# print(to_timestamp(tiempo, fecha))
 
 
 with serial.Serial("COM5", baudrate=4800) as ser:
