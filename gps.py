@@ -65,3 +65,5 @@ with serial.Serial("COM5", baudrate=4800) as ser:
                         loc_test_writer.writerow(header)
                     loc_test_writer.writerow([data[1], data[3], data[4], data[5], data[6],
                                               str(round(float(data[7]) * 1.852, 2)), data[8], data[9], data[10], data[11]])
+
+# export to GPX file and display track on OpenStreetMap https://www.openstreetmap.org/traces/new
