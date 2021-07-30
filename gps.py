@@ -28,7 +28,7 @@ header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
 # 3         | Current latitude  | 4916.45       | dd° mm.mmm' Latitude 49 deg. 16.45 min N/S.
 # 4         | North/South       | N             | North/South latitude.
 # 5         | Current longitude | 12311.12      | Longitude 123 deg. 11.12 min E/W.
-# 6         | East/West         | E             | East/West latitude.
+# 6         | East/West         | E             | East/West longitude.
 # 7         | Speed in knots    | 000.5         | Speed over ground in Knots -> * 1.852 to convert to kmh
 # 8         | True course       | 054.7         | Course Made Good, True
 # 9         | Date Stamp        | 191194        | Date of fix  19 November 1994 - ddmmyy
@@ -46,6 +46,9 @@ header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
 #     time_ = f"{time_[0:2]}:{time_[2:4]}:{time_[4:]} UTC"
 #     date_ = f"20{date_[4:]}-{date_[0:2]}-{date_[2:4]}"
 #     return date_ + ' ' + time_
+
+# ISO 8601 standardizes the representation of dates and times.[2]
+# These standard representations are often used to construct timestamp values.
 
 
 # print(to_timestamp(tiempo, fecha))
