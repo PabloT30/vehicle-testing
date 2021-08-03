@@ -53,8 +53,11 @@ header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
 
 # print(to_timestamp(tiempo, fecha))
 
+# "COM" para Windows.
+# Bus 001 Device 005: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port
+# usb 1-1.2: pl2303 converter now attached to ttyUSB0
 
-with serial.Serial("COM5", baudrate=4800) as ser:
+with serial.Serial("/dev/ttyUSB0", baudrate=4800) as ser:
     while True:
         line = str(ser.readline())  # read a '\n' terminated line.
         data = line.split(',')
