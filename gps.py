@@ -53,7 +53,7 @@ header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
 
 # print(to_timestamp(tiempo, fecha))
 
-# "COM" para Windows.
+# "COM5" para Windows.
 # Bus 001 Device 005: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port
 # usb 1-1.2: pl2303 converter now attached to ttyUSB0
 
@@ -70,6 +70,7 @@ with serial.Serial("/dev/ttyUSB0", baudrate=4800) as ser:
                         header_flag = False
                         loc_test_writer.writerow(header)
                     loc_test_writer.writerow([data[1], data[3], data[4], data[5], data[6],
-                                              str(round(float(data[7]) * 1.852, 2)), data[8], data[9], data[10], data[11]])
+                                              str(round(float(data[7]) * 1.852, 2)), data[8], data[9], data[10],
+                                              data[11]])
 
 # export to GPX file and display track on OpenStreetMap https://www.openstreetmap.org/traces/new
