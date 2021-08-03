@@ -57,6 +57,15 @@ header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
 # Bus 001 Device 005: ID 067b:2303 Prolific Technology, Inc. PL2303 Serial Port
 # usb 1-1.2: pl2303 converter now attached to ttyUSB0
 
+# What are the different GPS coordinate formats?
+# Here are examples of formats that work:
+# Degrees, minutes, and seconds (DMS): 41°24'12.2"N 2°10'26.5"E.
+# Degrees and decimal minutes (DMM): 41 24.2028, 2 10.4418.
+# Decimal degrees (DD): 41.40338, 2.17403.
+
+# to do convert from DMM to DD to plot on map.png
+# to do export to GPX file and display track on OpenStreetMap https://www.openstreetmap.org/traces/new
+
 with serial.Serial("/dev/ttyUSB0", baudrate=4800) as ser:
     while True:
         line = str(ser.readline())  # read a '\n' terminated line.
@@ -72,5 +81,3 @@ with serial.Serial("/dev/ttyUSB0", baudrate=4800) as ser:
                     loc_test_writer.writerow([data[1], data[3], data[4], data[5], data[6],
                                               str(round(float(data[7]) * 1.852, 2)), data[8], data[9], data[10],
                                               data[11]])
-
-# export to GPX file and display track on OpenStreetMap https://www.openstreetmap.org/traces/new
