@@ -1,15 +1,15 @@
 import math
-import tkinter as tk
+from tkinter import *
 from tkinter import Label, ttk
 from tkinter import font
 from PIL import ImageTk,Image
 from tkinter import filedialog
-from tkinter import *
 
-root = tk.Tk()
+
+root=Tk()
 root.title("Centro de Gravedad")
 root.geometry("1000x600")
-root.iconbitmap(file="carro.ico")
+#root.iconbitmap(file="carro.ico")
 
 #Panel para las pestañas
 nb = ttk.Notebook(root)
@@ -17,6 +17,10 @@ nb.pack(fill="both", expand="yes")
 
 #Pestañas
 p1 = ttk.Frame(nb)
+p1.columnconfigure(index=0,weight=1)
+p1.rowconfigure(index=0,weight=1)
+p1.rowconfigure(index=1,weight=1)
+p1.rowconfigure(index=2,weight=1)
 p2 = ttk.Frame(nb)
 p3 = ttk.Frame(nb)
 
@@ -35,21 +39,52 @@ def ingresar_operario_uno(registrar):
 def ingresar_operario_dos(registrar):
     print("La operario dos es: ", registrar)
 
+def seleccionar_operario_uno(selection):
+    for i in range(RegOpoptionmenu2["menu"].index("end")+1):
+        RegOpoptionmenu2["menu"].entryconfig(i,state="normal")
+    RegOpoptionmenu2["menu"].entryconfig(selection,state="disabled")
 
-label = tk.Label(p1, text="Registro de los Operarios", font=40)
-label.place(relx=0.5, rely=0, relwidth=0.75, relheight=0.4, anchor="n" )
+def seleccionar_operario_dos(selection):
+    for i in range(RegOpoptionmenu1["menu"].index("end")+1):
+        RegOpoptionmenu1["menu"].entryconfig(i,state="normal")
+    RegOpoptionmenu1["menu"].entryconfig(selection,state="disabled")
 
-label2 = tk.Label(p1, text="Operario 1", font=40)
-label2.place(relx=0.3, rely=0.3, relwidth=0.4, relheight=0.1, anchor="n")
 
-label3 = tk.Label(p1, text="Operario 2", font=40)
-label3.place(relx=0.3, rely=0.5, relwidth=0.4, relheight=0.1, anchor="n")
+RegOptitulo =ttk.Label(p1, text="Registro de los Operarios", font=40)
+RegOptitulo.grid(column=0, row=0)
+#RegOptitulo.place(relx=0.5, rely=0, relwidth=0.75, relheight=0.4, anchor="n" )
 
-operario_uno = tk.Entry(p1, font=40)
-operario_uno.place(relx=0.5, rely=0.3, relwidth=0.4, relheight=0.1)
+Optionmenuframe=ttk.LabelFrame(p1,text="")
+Optionmenuframe.columnconfigure(index=0,weight=1)
+Optionmenuframe.rowconfigure(index=0)
+Optionmenuframe.rowconfigure(index=1)
+Optionmenuframe.grid(column=0,row=1,sticky="nsew")
 
-operario_dos = tk.Entry(p1, font=40)
-operario_dos.place(relx=0.5, rely=0.5, relwidth=0.4, relheight=0.1)
+
+
+Operarioslista=["David Ramírez","Sebastián Pérez","Fernando Casanova","Jorge Lopera","Cristian Muñoz","Pablo Torres","Jhon Pazos"]
+a=StringVar()
+b=StringVar()
+a.set("Operario 1")
+b.set("Operario 2")
+RegOpoptionmenu1=OptionMenu(Optionmenuframe, a,*Operarioslista,command=seleccionar_operario_uno)
+RegOpoptionmenu1.grid(row=0,padx=5, pady=10)
+RegOpoptionmenu1.config(font=20)
+RegOpoptionmenu2=OptionMenu(Optionmenuframe, b,*Operarioslista,command=seleccionar_operario_dos)
+RegOpoptionmenu2.grid(row=1,padx=5, pady=10)
+RegOpoptionmenu2.config(font=20)
+
+#label2 = Label(p1, text="Operario 1", font=40)
+#label2.place(relx=0.3, rely=0.3, relwidth=0.4, relheight=0.1, anchor="n")
+
+#label3 = Label(p1, text="Operario 2", font=40)
+#label3.place(relx=0.3, rely=0.5, relwidth=0.4, relheight=0.1, anchor="n")
+
+#operario_uno = Entry(p1, font=40)
+#operario_uno.place(relx=0.5, rely=0.3, relwidth=0.4, relheight=0.1)
+
+#operario_dos = Entry(p1, font=40)
+#operario_dos.place(relx=0.5, rely=0.5, relwidth=0.4, relheight=0.1)
 
 registro = Button(p1, text="Registrar", command=lambda: [ingresar_operario_uno(operario_uno.get()),ingresar_operario_dos(operario_dos.get())])
 registro.place(relx=0.35, rely=0.8, relwidth=0.3, relheight=0.1)
@@ -59,7 +94,7 @@ registro.place(relx=0.35, rely=0.8, relwidth=0.3, relheight=0.1)
 #Funciones de la pestaña 2
 def imagen_carro():
     global my_image
-    root.filename = filedialog.askopenfilename(initialdir="C:/Users/David Ramírez/Desktop/CDG", title="Upload the car image")
+    root.filename = filedialog.askopenfilename(initialdir="C:/", title="Upload the car image")
     my_label = Label(p2, text=root.filename).pack()
     my_image = ImageTk.PhotoImage(Image.open(root.filename))
     my_label_image = Label(image=my_image).pack()
@@ -72,24 +107,24 @@ def ingresar_fecha(registro):
 
 
 #Seleccionar la foto del vehiculo
-texto_carro = tk.Label(p2, text="Ingrese la foto del Vehículo",font="20",)
+texto_carro = Label(p2, text="Ingrese la foto del Vehículo",font="20",)
 texto_carro.place(relx=0.1, rely=0.6, relwidth=0.5, relheight=0.1)
 
 btn_imagen_carro = Button(p2, text="Open File", command=imagen_carro)
 btn_imagen_carro.place(relx=0.65, rely=0.6, relwidth=0.3, relheight=0.1)
 
 #Ingresar la matricula del vehiculo
-texto_matricula = tk.Label(p2,text="Ingrese la matricula del vehículo", font=40)
+texto_matricula = Label(p2,text="Ingrese la matricula del vehículo", font=40)
 texto_matricula.place(relx=0.1, rely=0.4, relwidth=0.5, relheight=0.1)
 
-ent_matricula = tk.Entry(p2, font=40 )
+ent_matricula = Entry(p2, font=40 )
 ent_matricula.place(relx=0.65, rely=0.4, relwidth=0.3, relheight=0.1)
 
 #Ingresar la fecha del ensayo.
-texto_fecha = tk.Label(p2,text="Ingrese la fecha", font=40)
+texto_fecha = Label(p2,text="Ingrese la fecha", font=40)
 texto_fecha.place(relx=0.1, rely=0.2, relwidth=0.5, relheight=0.1)
 
-ent_fecha = tk.Entry(p2, font=40 )
+ent_fecha = Entry(p2, font=40 )
 ent_fecha.place(relx=0.65, rely=0.2, relwidth=0.3, relheight=0.1)
 
 #Boton para aceptar
@@ -274,94 +309,94 @@ def get_center_of_gravity(vehicle_mass, rear_axle_mass, mean_wheelbase, front_tr
     return longitudinal_distance, transverse_distance, height
 
 #enter the lift height in mm
-lbl_lift_height = tk.Label(p3,text="Please enter the lift height in mm: ")
+lbl_lift_height = Label(p3,text="Please enter the lift height in mm: ")
 lbl_lift_height.place(relx=0.1, rely=0.1, relwidth=0.3, relheight=0.04)
 
-lift_height = tk.Entry(p3)
+lift_height = Entry(p3)
 lift_height.place(relx=0.65, rely=0.1, relwidth=0.1, relheight=0.04)
 
 #enter the left wheelbase in mm
-lbl_left_wheelbase = tk.Label(p3,text="Please enter the left wheelbase in mm: ")
+lbl_left_wheelbase = Label(p3,text="Please enter the left wheelbase in mm: ")
 lbl_left_wheelbase.place(relx=0.1, rely=0.15, relwidth=0.3, relheight=0.04)
 
-left_wheelbase = tk.Entry(p3)
+left_wheelbase = Entry(p3)
 left_wheelbase.place(relx=0.65, rely=0.15, relwidth=0.1, relheight=0.04)
 
 #Enter the right wheelbase in mm
-lbl_right_wheelbase = tk.Label(p3,text="Please enter the right wheelbase in mm: " )
+lbl_right_wheelbase = Label(p3,text="Please enter the right wheelbase in mm: " )
 lbl_right_wheelbase.place(relx=0.1, rely=0.2, relwidth=0.3, relheight=0.04)
 
-right_wheelbase = tk.Entry(p3)
+right_wheelbase = Entry(p3)
 right_wheelbase.place(relx=0.65, rely=0.2, relwidth=0.1, relheight=0.04)
 
 #Enter vehicle rear track in mm
-lbl_rear_track = tk.Label(p3,text="Please enter vehicle rear track in mm: " )
+lbl_rear_track = Label(p3,text="Please enter vehicle rear track in mm: " )
 lbl_rear_track.place(relx=0.1, rely=0.25, relwidth=0.3, relheight=0.04)
 
-rear_track = tk.Entry(p3)
+rear_track = Entry(p3)
 rear_track.place(relx=0.65, rely=0.25, relwidth=0.1, relheight=0.04)
 
 #Enter vehicle front track in mm
-lbl_front_track = tk.Label(p3,text="Please enter vehicle front track in mm: ")
+lbl_front_track = Label(p3,text="Please enter vehicle front track in mm: ")
 lbl_front_track.place(relx=0.1, rely=0.3, relwidth=0.3, relheight=0.04)
 
-front_track = tk.Entry(p3)
+front_track = Entry(p3)
 front_track.place(relx=0.65, rely=0.3, relwidth=0.1, relheight=0.04)
 
 #Enter lifted vehicle wheel diameter in mm
-lbl_wheel_diameter = tk.Label(p3,text="Please enter lifted vehicle wheel diameter in mm: ")
+lbl_wheel_diameter = Label(p3,text="Please enter lifted vehicle wheel diameter in mm: ")
 lbl_wheel_diameter.place(relx=0.1, rely=0.35, relwidth=0.3, relheight=0.04)
 
-wheel_diameter = tk.Entry(p3)
+wheel_diameter = Entry(p3)
 wheel_diameter.place(relx=0.65, rely=0.35, relwidth=0.1, relheight=0.04)
 
 #enter lifted vehicle flattened wheel diameter in mm
-lbl_flattened_wheel_diameter = tk.Label(p3,text="Please enter lifted vehicle flattened wheel diameter in mm: ")
+lbl_flattened_wheel_diameter = Label(p3,text="Please enter lifted vehicle flattened wheel diameter in mm: ")
 lbl_flattened_wheel_diameter.place(relx=0.1, rely=0.4, relwidth=0.3, relheight=0.04)
 
-flattened_wheel_diameter = tk.Entry(p3)
+flattened_wheel_diameter = Entry(p3)
 flattened_wheel_diameter.place(relx=0.65, rely=0.4, relwidth=0.1, relheight=0.04)
 
 #Enter the rear left wheel mass in kg
-lbl_rear_left_wheel_mass = tk.Label(p3,text="Please enter the rear left wheel mass in kg: ")
+lbl_rear_left_wheel_mass = Label(p3,text="Please enter the rear left wheel mass in kg: ")
 lbl_rear_left_wheel_mass.place(relx=0.1, rely=0.45, relwidth=0.3, relheight=0.04)
 
-rear_left_wheel_mass = tk.Entry(p3)
+rear_left_wheel_mass = Entry(p3)
 rear_left_wheel_mass.place(relx=0.65, rely=0.45, relwidth=0.1, relheight=0.04)
 
 #Enter the rear right wheel mass in kg
-lbl_rear_right_wheel_mass = tk.Label(p3,text="Please enter the rear right wheel mass in kg: ")
+lbl_rear_right_wheel_mass = Label(p3,text="Please enter the rear right wheel mass in kg: ")
 lbl_rear_right_wheel_mass.place(relx=0.1, rely=0.5, relwidth=0.3, relheight=0.04)
 
-rear_right_wheel_mass = tk.Entry(p3)
+rear_right_wheel_mass = Entry(p3)
 rear_right_wheel_mass.place(relx=0.65, rely=0.5, relwidth=0.1, relheight=0.04)
 
 #Enter the lifted rear left wheel mass in kg
-lbl_front_left_wheel_mass = tk.Label(p3,text="Please enter the lifted rear left wheel mass in kg: ")
+lbl_front_left_wheel_mass = Label(p3,text="Please enter the lifted rear left wheel mass in kg: ")
 lbl_front_left_wheel_mass.place(relx=0.1, rely=0.55, relwidth=0.3, relheight=0.04)
 
-front_left_wheel_mass = tk.Entry(p3)
+front_left_wheel_mass = Entry(p3)
 front_left_wheel_mass.place(relx=0.65, rely=0.55, relwidth=0.1, relheight=0.04)
 
 #Enter the lifted rear right wheel mass in kg
-lbl_front_right_wheel_mass = tk.Label(p3,text="Please enter the lifted rear right wheel mass in kg: ")
+lbl_front_right_wheel_mass = Label(p3,text="Please enter the lifted rear right wheel mass in kg: ")
 lbl_front_right_wheel_mass.place(relx=0.1, rely=0.6, relwidth=0.3, relheight=0.04)
 
-front_right_wheel_mass = tk.Entry(p3)
+front_right_wheel_mass = Entry(p3)
 front_right_wheel_mass.place(relx=0.65, rely=0.6, relwidth=0.1, relheight=0.04)
 
 #Enter the lifted rear left wheel mass in kg
-lbl_lifted_rear_left_wheel_mass = tk.Label(p3,text="Please enter the lifted rear right wheel mass in kg: ")
+lbl_lifted_rear_left_wheel_mass = Label(p3,text="Please enter the lifted rear right wheel mass in kg: ")
 lbl_lifted_rear_left_wheel_mass.place(relx=0.1, rely=0.65, relwidth=0.3, relheight=0.04)
 
-lifted_rear_left_wheel_mass = tk.Entry(p3)
+lifted_rear_left_wheel_mass = Entry(p3)
 lifted_rear_left_wheel_mass.place(relx=0.65, rely=0.65, relwidth=0.1, relheight=0.04)
 
 #Enter the lifted rear right wheel mass in kg
-lbl_lifted_rear_right_wheel_mass = tk.Label(p3,text="Please enter the lifted rear right wheel mass in kg: ")
+lbl_lifted_rear_right_wheel_mass = Label(p3,text="Please enter the lifted rear right wheel mass in kg: ")
 lbl_lifted_rear_right_wheel_mass.place(relx=0.1, rely=0.7, relwidth=0.3, relheight=0.04)
 
-lifted_rear_right_wheel_mass = tk.Entry(p3)
+lifted_rear_right_wheel_mass = Entry(p3)
 lifted_rear_right_wheel_mass.place(relx=0.65, rely=0.7, relwidth=0.1, relheight=0.04)
 
 
