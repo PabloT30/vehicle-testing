@@ -33,8 +33,8 @@ class GPSVis(object):
         self.get_ticks()
         fig, axis1 = plt.subplots(figsize=(10, 10))
         axis1.imshow(self.result_image)
-        axis1.set_xlabel('Longitude')
-        axis1.set_ylabel('Latitude')
+        axis1.set_xlabel('longitude_dd_E')
+        axis1.set_ylabel('latitude_dd_N')
         axis1.set_xticklabels(self.x_ticks)
         axis1.set_yticklabels(self.y_ticks)
         axis1.grid()
@@ -50,11 +50,12 @@ class GPSVis(object):
         :param width: Width of the drawn GPS records.
         :return:
         """
-        data = pd.read_csv(self.data_path, names=['LATITUDE', 'LONGITUDE'], sep=',')
+        # data = pd.read_csv(self.data_path, names=['latitude_dd_N', 'longitude_dd_E'], sep=',')
+        data = pd.read_csv(self.data_path, sep=',')
 
         self.result_image = Image.open(self.map_path, 'r')
         img_points = []
-        gps_data = tuple(zip(data['LATITUDE'].values, data['LONGITUDE'].values))
+        gps_data = tuple(zip(data['latitude_dd_N'].values, data['longitude_dd_E'].values))
         for d in gps_data:
             x1, y1 = self.scale_to_img(d, (self.result_image.size[0], self.result_image.size[1]))
             img_points.append((x1, y1))
@@ -63,7 +64,7 @@ class GPSVis(object):
 
     def scale_to_img(self, lat_lon, h_w):
         """
-        Conversion from latitude and longitude to the image pixels.
+        Conversion from latitude_dd_N and longitude_dd_E to the image pixels.
         It is used for drawing the GPS records on the map image.
         :param lat_lon: GPS record to draw (lat1, lon1).
         :param h_w: Size of the map image (w, h).

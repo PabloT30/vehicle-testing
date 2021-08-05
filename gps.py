@@ -60,11 +60,11 @@ header = ['time_stamp', 'latitude', 'north/south', 'longitude', 'east/west',
 # What are the different GPS coordinate formats?
 # Here are examples of formats that work:
 # Degrees, minutes, and seconds (DMS): 41°24'12.2"N 2°10'26.5"E.
-# Degrees and decimal minutes (DMM): 41 24.2028, 2 10.4418.
+# Degrees and decimal minutes (DDM): 41 24.2028, 2 10.4418.
 # Decimal degrees (DD): 41.40338, 2.17403.
 
-# to do convert from DMM to DD to plot on map.png
-# to do export to GPX file and display track on OpenStreetMap https://www.openstreetmap.org/traces/new
+# todo convert from DDM to DD to plot on map.png
+# todo export to GPX file and display track on OpenStreetMap https://www.openstreetmap.org/traces/new
 
 with serial.Serial("/dev/ttyUSB0", baudrate=4800) as ser:
     while True:
