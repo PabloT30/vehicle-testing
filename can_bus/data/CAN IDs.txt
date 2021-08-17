@@ -1,0 +1,17 @@
+CAN bus summary:
+- 0 of 8 IDs in the MDF4 file were matched in the DBC and converted
+- 8 unknown IDs in the MDF4 file
+
+Detailed information:
+
+The following CAN IDs were in the MDF log file and matched in the DBC:
+
+The following CAN IDs were in the MDF log file, but not matched in the DBC:
+- 0x260
+- 0x2A0
+- 0x316
+- 0x329
+- 0x370
+- 0x43F
+- 0x440
+- 0x545
