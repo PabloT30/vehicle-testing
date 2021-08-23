@@ -1,6 +1,6 @@
 # https://python-obd.readthedocs.io/en/latest/
 # https://github.com/brendan-w/python-OBD
-import obd  # 
+import obd
 
 # print(obd.OBD)            # main OBD connection class
 # print(obd.Async)          # asynchronous OBD connection class
@@ -12,9 +12,11 @@ import obd  #
 # print(obd.ECU)            # enum for marking which ECU a command should listen to
 # print(obd.logger)        # the OBD module's root logger (for debug)
 
+# with obd.OBD() as connection:
+#     print("Port opened")
+
 # create connection with ELM327 Bluetooth Dongle.
 ports = obd.scan_serial()      # return list of valid USB or RF ports
-print(ports)                    # ['/dev/rfcomm0']
 connection = obd.OBD(portstr=ports[0],
                     baudrate=None,
                     protocol=None,
@@ -22,22 +24,12 @@ connection = obd.OBD(portstr=ports[0],
                     timeout=1,  # 0.1 by default.
                     check_voltage=False)  # True by default.
 
-# cmd = obd.commands.SPEED # select an OBD command (sensor)
-cmd = obd.commands.ELM_VERSION # select an OBD command (sensor)
-response = connection.query(cmd) # send the command, and parse the response
-
-print(response.value) # returns unit-bearing values thanks to Pint
-# print(response.value.to("mph")) # user-friendly unit conversions
-
 print(connection.status())
 print(connection.port_name())
 print(connection.protocol_name())
+print(type(obd.commands))
 
-# with obd.OBD() as connection:
-#     print("...")
-#     print(obd.OBDStatus.NOT_CONNECTED)
-#     print(obd.OBDStatus.ELM_CONNECTED)
-#     print(obd.OBDStatus.OBD_CONNECTED)
-#     print(obd.OBDStatus.CAR_CONNECTED)
-#     print("...")
-#     print(connection.status())
+cmd = obd.commands.SPEED # select an OBD command (sensor)
+response = connection.query(cmd) # send the command, and parse the response
+print(response.value) # returns unit-bearing values thanks to Pint
+
