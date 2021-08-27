@@ -17,6 +17,7 @@ import obd
 
 # create connection with ELM327 Bluetooth Dongle.
 ports = obd.scan_serial()      # return list of valid USB or RF ports
+print(ports)
 connection = obd.OBD(portstr=ports[0],
                     baudrate=None,
                     protocol=None,
@@ -27,7 +28,6 @@ connection = obd.OBD(portstr=ports[0],
 print(connection.status())
 print(connection.port_name())
 print(connection.protocol_name())
-print(type(obd.commands))
 
 cmd = obd.commands.SPEED # select an OBD command (sensor)
 response = connection.query(cmd) # send the command, and parse the response
